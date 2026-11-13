@@ -1,0 +1,13 @@
+[project]
+name = "prognosis"
+version = "2.0.0"
+description = "Clinical risk decision support: diabetes, heart disease and chronic kidney disease"
+requires-python = ">=3.10"
+readme = "README.md"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning", "ignore::UserWarning"]
+
+[tool.ruff]
+line-length = 130

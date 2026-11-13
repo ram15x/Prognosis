@@ -1,0 +1,480 @@
+{
+  "condition": "ckd",
+  "title": "Chronic kidney disease",
+  "description": "Probability of CKD from urine and blood work, most labs optional.",
+  "label": "ckd versus notckd in the UCI chronic kidney disease set (about 400 patients, one hospital, 2015).",
+  "trained_at": "2026-11-13T12:50:48+00:00",
+  "data": {
+    "rows": 399,
+    "prevalence": 0.6265664160401002,
+    "sha256_16": "a5ea96369b8516d7",
+    "notes": [
+      "kept all 399 rows; 1 malformed line(s) skipped; the old notebook kept only 158 by dropping rows with gaps"
+    ],
+    "train_rows": 319,
+    "test_rows": 80
+  },
+  "cv": {
+    "folds": "5-fold stratified",
+    "repeats": 5,
+    "table": [
+      {
+        "model": "logreg",
+        "roc_auc": 0.999748188405797,
+        "roc_auc_sd": 0.000740328313211224,
+        "brier_raw": 0.010397058430597381,
+        "brier_cal": 0.009110709664474555,
+        "brier_cal_se": 0.0015477467916512615,
+        "ece_raw": 0.0288201547890646,
+        "ece_cal": 0.02192154569752307,
+        "calibration": "none",
+        "seconds": 1.5
+      },
+      {
+        "model": "hist_gb",
+        "roc_auc": 0.9992916666666667,
+        "roc_auc_sd": 0.0014043582955294018,
+        "brier_raw": 0.010377043399264126,
+        "brier_cal": 0.01025690319601973,
+        "brier_cal_se": 0.0021168060326440595,
+        "ece_raw": 0.01387270422159823,
+        "ece_cal": 0.011191783222420967,
+        "calibration": "none",
+        "seconds": 110.7
+      },
+      {
+        "model": "random_forest",
+        "roc_auc": 0.9988731884057971,
+        "roc_auc_sd": 0.0019301479935597153,
+        "brier_raw": 0.016863730060334918,
+        "brier_cal": 0.010523721496154886,
+        "brier_cal_se": 0.002187461920857235,
+        "ece_raw": 0.05941630617682549,
+        "ece_cal": 0.013180149750888376,
+        "calibration": "sigmoid",
+        "seconds": 13.5
+      },
+      {
+        "model": "xgboost",
+        "roc_auc": 0.9985833333333334,
+        "roc_auc_sd": 0.0021424933553637576,
+        "brier_raw": 0.013541041819676705,
+        "brier_cal": 0.013466934597066582,
+        "brier_cal_se": 0.00247915146389959,
+        "ece_raw": 0.016850965796549412,
+        "ece_cal": 0.01618440058261375,
+        "calibration": "none",
+        "seconds": 39.8
+      },
+      {
+        "model": "lightgbm",
+        "roc_auc": 0.999375,
+        "roc_auc_sd": 0.001350154312168312,
+        "brier_raw": 0.009857630318676331,
+        "brier_cal": 0.009412073267409497,
+        "brier_cal_se": 0.002025019896621909,
+        "ece_raw": 0.015850477182491766,
+        "ece_cal": 0.014000842941980483,
+        "calibration": "isotonic",
+        "seconds": 104.2
+      },
+      {
+        "model": "stack",
+        "roc_auc": 0.9995416666666667,
+        "roc_auc_sd": 0.001024017143953706,
+        "brier_raw": 0.008328848592191882,
+        "brier_cal": 0.008271361316651715,
+        "brier_cal_se": 0.0018850304128863022,
+        "ece_raw": 0.03145522773336673,
+        "ece_cal": 0.026592394612819047,
+        "calibration": "none",
+        "seconds": 1071.1
+      }
+    ]
+  },
+  "selected": "logreg",
+  "best_by_brier": "stack",
+  "calibration": "none",
+  "thresholds": {
+    "low_moderate": 0.3,
+    "moderate_high": 0.35,
+    "rule": "low cut keeps 95% sensitivity but never above 0.30, high cut keeps 95% specificity and sits at least 0.05 above the low cut (out-of-fold, train split)"
+  },
+  "test": {
+    "metrics": {
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "brier": 0.010571532639364754,
+      "log_loss": 0.04856412180367039,
+      "ece": 0.041492418560608355
+    },
+    "ci95": {
+      "roc_auc": [
+        0.9999999999999999,
+        1.0
+      ],
+      "brier": [
+        0.003528077823937204,
+        0.019266596123871934
+      ]
+    },
+    "logreg_roc_auc": 1.0,
+    "bands": {
+      "low": {
+        "n": 29,
+        "share": 0.3625,
+        "observed_rate": 0.0
+      },
+      "moderate": {
+        "n": 1,
+        "share": 0.0125,
+        "observed_rate": 0.0
+      },
+      "high": {
+        "n": 50,
+        "share": 0.625,
+        "observed_rate": 1.0
+      }
+    },
+    "at_low_cut": {
+      "cut": 0.3,
+      "sensitivity": 1.0,
+      "specificity": 0.9666666666666667,
+      "ppv": 0.9803921568627451,
+      "npv": 1.0,
+      "tp": 50,
+      "fp": 1,
+      "tn": 29,
+      "fn": 0
+    },
+    "at_high_cut": {
+      "cut": 0.35,
+      "sensitivity": 1.0,
+      "specificity": 1.0,
+      "ppv": 1.0,
+      "npv": 1.0,
+      "tp": 50,
+      "fp": 0,
+      "tn": 30,
+      "fn": 0
+    }
+  },
+  "importance": [
+    {
+      "feature": "sg",
+      "auc_drop": 0.03480000000000001,
+      "sd": 0.011230118234264308
+    },
+    {
+      "feature": "pot",
+      "auc_drop": 0.013866666666666683,
+      "sd": 0.008706574782567762
+    },
+    {
+      "feature": "hemo",
+      "auc_drop": 0.011599999999999989,
+      "sd": 0.007543650751901701
+    },
+    {
+      "feature": "pcv",
+      "auc_drop": 0.003733333333333322,
+      "sd": 0.0030287511177601407
+    },
+    {
+      "feature": "bgr",
+      "auc_drop": 0.0031333333333333213,
+      "sd": 0.0021919042963698078
+    },
+    {
+      "feature": "al",
+      "auc_drop": 0.002866666666666662,
+      "sd": 0.001194431524477924
+    },
+    {
+      "feature": "sc",
+      "auc_drop": 0.0008666666666666712,
+      "sd": 0.001431394036905602
+    },
+    {
+      "feature": "rbcc",
+      "auc_drop": 0.0007333333333333414,
+      "sd": 0.0007571877794400331
+    },
+    {
+      "feature": "dm",
+      "auc_drop": 0.0006666666666666598,
+      "sd": 0.000596284793999928
+    },
+    {
+      "feature": "appet",
+      "auc_drop": 0.0006000000000000117,
+      "sd": 0.0007571877794400186
+    },
+    {
+      "feature": "htn",
+      "auc_drop": 0.0005999999999999894,
+      "sd": 0.000628932075470424
+    },
+    {
+      "feature": "bu",
+      "auc_drop": 0.0004666666666666708,
+      "sd": 0.0011944315244779295
+    },
+    {
+      "feature": "sod",
+      "auc_drop": 0.00013333333333334085,
+      "sd": 0.0002666666666666817
+    },
+    {
+      "feature": "age",
+      "auc_drop": 0.0,
+      "sd": 0.0
+    },
+    {
+      "feature": "bp",
+      "auc_drop": 0.0,
+      "sd": 0.0
+    },
+    {
+      "feature": "su",
+      "auc_drop": 0.0,
+      "sd": 0.0
+    },
+    {
+      "feature": "rbc",
+      "auc_drop": 0.0,
+      "sd": 0.0
+    },
+    {
+      "feature": "pc",
+      "auc_drop": 0.0,
+      "sd": 0.0
+    },
+    {
+      "feature": "pcc",
+      "auc_drop": 0.0,
+      "sd": 0.0
+    },
+    {
+      "feature": "ba",
+      "auc_drop": 0.0,
+      "sd": 0.0
+    },
+    {
+      "feature": "wbcc",
+      "auc_drop": 0.0,
+      "sd": 0.0
+    },
+    {
+      "feature": "cad",
+      "auc_drop": 0.0,
+      "sd": 0.0
+    },
+    {
+      "feature": "pe",
+      "auc_drop": 0.0,
+      "sd": 0.0
+    },
+    {
+      "feature": "ane",
+      "auc_drop": 0.0,
+      "sd": 0.0
+    }
+  ],
+  "ranges": {
+    "age": {
+      "p1": 5.0,
+      "p99": 80.0,
+      "min": 2.0,
+      "max": 90.0,
+      "median": 54.0,
+      "missing_rate": 0.025078369905956112
+    },
+    "bp": {
+      "p1": 50.7,
+      "p99": 110.0,
+      "min": 50.0,
+      "max": 180.0,
+      "median": 80.0,
+      "missing_rate": 0.034482758620689655
+    },
+    "sg": {
+      "p1": 1.005,
+      "p99": 1.025,
+      "min": 1.005,
+      "max": 1.025,
+      "median": 1.02,
+      "missing_rate": 0.12852664576802508
+    },
+    "al": {
+      "seen": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "missing_rate": 0.12539184952978055
+    },
+    "su": {
+      "seen": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "missing_rate": 0.13166144200626959
+    },
+    "rbc": {
+      "seen": [
+        "abnormal",
+        "normal"
+      ],
+      "missing_rate": 0.39184952978056425
+    },
+    "pc": {
+      "seen": [
+        "abnormal",
+        "normal"
+      ],
+      "missing_rate": 0.16614420062695925
+    },
+    "pcc": {
+      "seen": [
+        "notpresent",
+        "present"
+      ],
+      "missing_rate": 0.012539184952978056
+    },
+    "ba": {
+      "seen": [
+        "notpresent",
+        "present"
+      ],
+      "missing_rate": 0.012539184952978056
+    },
+    "bgr": {
+      "p1": 70.0,
+      "p99": 432.59999999999957,
+      "min": 22.0,
+      "max": 490.0,
+      "median": 121.0,
+      "missing_rate": 0.11912225705329153
+    },
+    "bu": {
+      "p1": 14.950000000000001,
+      "p99": 235.05999999999995,
+      "min": 1.5,
+      "max": 322.0,
+      "median": 42.0,
+      "missing_rate": 0.05956112852664577
+    },
+    "sc": {
+      "p1": 0.5,
+      "p99": 18.098000000000003,
+      "min": 0.4,
+      "max": 76.0,
+      "median": 1.2,
+      "missing_rate": 0.050156739811912224
+    },
+    "sod": {
+      "p1": 111.86,
+      "p99": 150.0,
+      "min": 4.5,
+      "max": 150.0,
+      "median": 138.0,
+      "missing_rate": 0.23510971786833856
+    },
+    "pot": {
+      "p1": 2.742,
+      "p99": 6.5,
+      "min": 2.5,
+      "max": 7.6,
+      "median": 4.3,
+      "missing_rate": 0.23824451410658307
+    },
+    "hemo": {
+      "p1": 5.574999999999999,
+      "p99": 17.625,
+      "min": 3.1,
+      "max": 17.8,
+      "median": 12.6,
+      "missing_rate": 0.13479623824451412
+    },
+    "pcv": {
+      "p1": 15.6,
+      "p99": 53.39999999999998,
+      "min": 9.0,
+      "max": 54.0,
+      "median": 40.0,
+      "missing_rate": 0.18181818181818182
+    },
+    "wbcc": {
+      "p1": 3800.0,
+      "p99": 19032.0,
+      "min": 2200.0,
+      "max": 26400.0,
+      "median": 8000.0,
+      "missing_rate": 0.26332288401253917
+    },
+    "rbcc": {
+      "p1": 2.3129999999999997,
+      "p99": 6.5,
+      "min": 2.1,
+      "max": 6.5,
+      "median": 4.8,
+      "missing_rate": 0.329153605015674
+    },
+    "htn": {
+      "seen": [
+        "0.0",
+        "1.0"
+      ],
+      "missing_rate": 0.006269592476489028
+    },
+    "dm": {
+      "seen": [
+        "0.0",
+        "1.0"
+      ],
+      "missing_rate": 0.006269592476489028
+    },
+    "cad": {
+      "seen": [
+        "0.0",
+        "1.0"
+      ],
+      "missing_rate": 0.006269592476489028
+    },
+    "appet": {
+      "seen": [
+        "good",
+        "poor"
+      ],
+      "missing_rate": 0.003134796238244514
+    },
+    "pe": {
+      "seen": [
+        "0.0",
+        "1.0"
+      ],
+      "missing_rate": 0.003134796238244514
+    },
+    "ane": {
+      "seen": [
+        "0.0",
+        "1.0"
+      ],
+      "missing_rate": 0.003134796238244514
+    }
+  },
+  "extra": {},
+  "env": {
+    "python": "3.13.18",
+    "sklearn": "1.9.1",
+    "seed": 42
+  }
+}

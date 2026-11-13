@@ -1,0 +1,15 @@
+numpy
+pandas
+scikit-learn
+xgboost
+lightgbm
+fastapi
+uvicorn
+sqlalchemy
+argon2-cffi
+pyjwt
+python-multipart
+httpx
+fpdf2
+streamlit
+plotly

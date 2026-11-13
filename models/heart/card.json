@@ -1,0 +1,340 @@
+{
+  "condition": "heart",
+  "title": "Heart disease",
+  "description": "Presence of angiographic heart disease from the Cleveland clinical features.",
+  "label": "Cleveland 'num' column collapsed to 0 = none, 1 = any narrowing (original values 1 to 4).",
+  "trained_at": "2026-11-13T10:04:17+00:00",
+  "data": {
+    "rows": 303,
+    "prevalence": 0.45874587458745875,
+    "sha256_16": "a74b7efa387bc9d1",
+    "notes": [
+      "kept all 303 rows, 6 have a missing ca/thal and are imputed inside the pipeline"
+    ],
+    "train_rows": 242,
+    "test_rows": 61
+  },
+  "cv": {
+    "folds": "5-fold stratified",
+    "repeats": 5,
+    "table": [
+      {
+        "model": "logreg",
+        "roc_auc": 0.8926939405200274,
+        "roc_auc_sd": 0.04349509490240205,
+        "brier_raw": 0.12830914419216385,
+        "brier_cal": 0.12812335107250983,
+        "brier_cal_se": 0.005521947708760762,
+        "ece_raw": 0.053356978026143274,
+        "ece_cal": 0.04818299294541205,
+        "calibration": "none",
+        "seconds": 0.9
+      },
+      {
+        "model": "hist_gb",
+        "roc_auc": 0.8722383815862078,
+        "roc_auc_sd": 0.04199019737684632,
+        "brier_raw": 0.14841440876583722,
+        "brier_cal": 0.14638510106649258,
+        "brier_cal_se": 0.005556989275493482,
+        "ece_raw": 0.0602812165614119,
+        "ece_cal": 0.056641572053421504,
+        "calibration": "none",
+        "seconds": 2.4
+      },
+      {
+        "model": "random_forest",
+        "roc_auc": 0.8967754467754467,
+        "roc_auc_sd": 0.03613378052067306,
+        "brier_raw": 0.13167984544834702,
+        "brier_cal": 0.13019157273984241,
+        "brier_cal_se": 0.004842020130730548,
+        "ece_raw": 0.0863465927508695,
+        "ece_cal": 0.06356516924698052,
+        "calibration": "sigmoid",
+        "seconds": 13.6
+      },
+      {
+        "model": "xgboost",
+        "roc_auc": 0.8685146898190377,
+        "roc_auc_sd": 0.045846668334965375,
+        "brier_raw": 0.1517398187179851,
+        "brier_cal": 0.14433883139848622,
+        "brier_cal_se": 0.005537108582941322,
+        "ece_raw": 0.09053857332491895,
+        "ece_cal": 0.05596762075355129,
+        "calibration": "sigmoid",
+        "seconds": 28.8
+      },
+      {
+        "model": "lightgbm",
+        "roc_auc": 0.8671204801639583,
+        "roc_auc_sd": 0.04666552555615728,
+        "brier_raw": 0.15470707117434057,
+        "brier_cal": 0.1459583885541571,
+        "brier_cal_se": 0.005449527704201335,
+        "ece_raw": 0.10011553516193099,
+        "ece_cal": 0.04755251351052194,
+        "calibration": "sigmoid",
+        "seconds": 43.5
+      },
+      {
+        "model": "stack",
+        "roc_auc": 0.8961631926849318,
+        "roc_auc_sd": 0.03847637110653946,
+        "brier_raw": 0.13056655375670612,
+        "brier_cal": 0.13047897083741408,
+        "brier_cal_se": 0.0055720923338951145,
+        "ece_raw": 0.06556361719942164,
+        "ece_cal": 0.0596418249075226,
+        "calibration": "none",
+        "seconds": 364.3
+      }
+    ]
+  },
+  "selected": "logreg",
+  "best_by_brier": "logreg",
+  "calibration": "none",
+  "thresholds": {
+    "low_moderate": 0.16562421346882597,
+    "moderate_high": 0.7927116248315141,
+    "rule": "low cut keeps 95% sensitivity but never above 0.30, high cut keeps 95% specificity and sits at least 0.05 above the low cut (out-of-fold, train split)"
+  },
+  "test": {
+    "metrics": {
+      "roc_auc": 0.9653679653679654,
+      "pr_auc": 0.9622541361734013,
+      "brier": 0.08012322064107529,
+      "log_loss": 0.2605348439232696,
+      "ece": 0.08284334454255446
+    },
+    "ci95": {
+      "roc_auc": [
+        0.921505376344086,
+        0.9945533769063181
+      ],
+      "brier": [
+        0.04498304804610092,
+        0.12135851747543304
+      ]
+    },
+    "logreg_roc_auc": 0.9653679653679654,
+    "bands": {
+      "low": {
+        "n": 20,
+        "share": 0.32786885245901637,
+        "observed_rate": 0.0
+      },
+      "moderate": {
+        "n": 19,
+        "share": 0.3114754098360656,
+        "observed_rate": 0.3684210526315789
+      },
+      "high": {
+        "n": 22,
+        "share": 0.36065573770491804,
+        "observed_rate": 0.9545454545454546
+      }
+    },
+    "at_low_cut": {
+      "cut": 0.16562421346882597,
+      "sensitivity": 1.0,
+      "specificity": 0.6060606060606061,
+      "ppv": 0.6829268292682927,
+      "npv": 1.0,
+      "tp": 28,
+      "fp": 13,
+      "tn": 20,
+      "fn": 0
+    },
+    "at_high_cut": {
+      "cut": 0.7927116248315141,
+      "sensitivity": 0.75,
+      "specificity": 0.9696969696969697,
+      "ppv": 0.9545454545454546,
+      "npv": 0.8205128205128205,
+      "tp": 21,
+      "fp": 1,
+      "tn": 32,
+      "fn": 7
+    }
+  },
+  "importance": [
+    {
+      "feature": "ca",
+      "auc_drop": 0.06320346320346329,
+      "sd": 0.016634308274321098
+    },
+    {
+      "feature": "cp",
+      "auc_drop": 0.04686147186147192,
+      "sd": 0.011371879096691278
+    },
+    {
+      "feature": "oldpeak",
+      "auc_drop": 0.01525974025974034,
+      "sd": 0.0030399506288286424
+    },
+    {
+      "feature": "slope",
+      "auc_drop": 0.009632034632034681,
+      "sd": 0.008375392819890002
+    },
+    {
+      "feature": "sex",
+      "auc_drop": 0.008008658008658043,
+      "sd": 0.009070271359202147
+    },
+    {
+      "feature": "exang",
+      "auc_drop": 0.005735930735930772,
+      "sd": 0.0052586712611499
+    },
+    {
+      "feature": "trestbps",
+      "auc_drop": 0.004870129870129913,
+      "sd": 0.008901474032458088
+    },
+    {
+      "feature": "thal",
+      "auc_drop": 0.004112554112554156,
+      "sd": 0.007321010617007668
+    },
+    {
+      "feature": "thalach",
+      "auc_drop": 0.003138528138528185,
+      "sd": 0.00678373763818823
+    },
+    {
+      "feature": "age",
+      "auc_drop": 0.0018398268398268415,
+      "sd": 0.0017484301321865126
+    },
+    {
+      "feature": "restecg",
+      "auc_drop": 0.0016233766233766378,
+      "sd": 0.0023834107733274016
+    },
+    {
+      "feature": "fbs",
+      "auc_drop": 0.0009740259740259938,
+      "sd": 0.001406926406926389
+    },
+    {
+      "feature": "chol",
+      "auc_drop": 0.0006493506493506551,
+      "sd": 0.0020648034662704303
+    }
+  ],
+  "ranges": {
+    "age": {
+      "p1": 35.0,
+      "p99": 71.0,
+      "min": 29.0,
+      "max": 77.0,
+      "median": 56.0,
+      "missing_rate": 0.0
+    },
+    "sex": {
+      "seen": [
+        "Female",
+        "Male"
+      ],
+      "missing_rate": 0.0
+    },
+    "cp": {
+      "seen": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "missing_rate": 0.0
+    },
+    "trestbps": {
+      "p1": 100.0,
+      "p99": 180.0,
+      "min": 94.0,
+      "max": 200.0,
+      "median": 130.0,
+      "missing_rate": 0.0
+    },
+    "chol": {
+      "p1": 149.0,
+      "p99": 408.18,
+      "min": 126.0,
+      "max": 564.0,
+      "median": 244.5,
+      "missing_rate": 0.0
+    },
+    "fbs": {
+      "seen": [
+        "0.0",
+        "1.0"
+      ],
+      "missing_rate": 0.0
+    },
+    "restecg": {
+      "seen": [
+        "0",
+        "1",
+        "2"
+      ],
+      "missing_rate": 0.0
+    },
+    "thalach": {
+      "p1": 95.41,
+      "p99": 191.18,
+      "min": 71.0,
+      "max": 202.0,
+      "median": 153.5,
+      "missing_rate": 0.0
+    },
+    "exang": {
+      "seen": [
+        "0.0",
+        "1.0"
+      ],
+      "missing_rate": 0.0
+    },
+    "oldpeak": {
+      "p1": 0.0,
+      "p99": 4.2,
+      "min": 0.0,
+      "max": 6.2,
+      "median": 0.8,
+      "missing_rate": 0.0
+    },
+    "slope": {
+      "seen": [
+        "1",
+        "2",
+        "3"
+      ],
+      "missing_rate": 0.0
+    },
+    "ca": {
+      "seen": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "missing_rate": 0.004132231404958678
+    },
+    "thal": {
+      "seen": [
+        "3",
+        "6",
+        "7"
+      ],
+      "missing_rate": 0.004132231404958678
+    }
+  },
+  "extra": {},
+  "env": {
+    "python": "3.13.18",
+    "sklearn": "1.9.1",
+    "seed": 42
+  }
+}

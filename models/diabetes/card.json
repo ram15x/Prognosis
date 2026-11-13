@@ -1,0 +1,282 @@
+{
+  "condition": "diabetes",
+  "title": "Diabetes",
+  "description": "Screening risk from routine measurements and two blood tests.",
+  "label": "diabetes flag in the Kaggle diabetes prediction dataset (100k rows, synthetic-looking, single source).",
+  "trained_at": "2026-11-13T12:51:08+00:00",
+  "data": {
+    "rows": 96128,
+    "prevalence": 0.08823651797603196,
+    "sha256_16": "f233fc470e904201",
+    "notes": [
+      "dropped 3872 rows (exact duplicates and gender 'Other')"
+    ],
+    "train_rows": 76902,
+    "test_rows": 19226
+  },
+  "cv": {
+    "folds": "5-fold stratified",
+    "repeats": 1,
+    "table": [
+      {
+        "model": "logreg",
+        "roc_auc": 0.9620223880207703,
+        "roc_auc_sd": 0.0005313338180251274,
+        "brier_raw": 0.0326800422629276,
+        "brier_cal": 0.03254046417669604,
+        "brier_cal_se": 0.00025097113888716225,
+        "ece_raw": 0.00599333078362744,
+        "ece_cal": 0.0006369971757570767,
+        "calibration": "isotonic",
+        "seconds": 1.3
+      },
+      {
+        "model": "hist_gb",
+        "roc_auc": 0.9793089854004572,
+        "roc_auc_sd": 0.00030093832229075056,
+        "brier_raw": 0.023388012318756604,
+        "brier_cal": 0.023388017527810688,
+        "brier_cal_se": 0.00011725169351753193,
+        "ece_raw": 0.001048934032863278,
+        "ece_cal": 0.001048934032863278,
+        "calibration": "none",
+        "seconds": 65.5
+      },
+      {
+        "model": "random_forest",
+        "roc_auc": 0.9708259635367501,
+        "roc_auc_sd": 0.000983696181719067,
+        "brier_raw": 0.02450399464636137,
+        "brier_cal": 0.02438603738858051,
+        "brier_cal_se": 0.0001728225847760199,
+        "ece_raw": 0.0036283784035738616,
+        "ece_cal": 0.0005784304884822152,
+        "calibration": "isotonic",
+        "seconds": 57.0
+      },
+      {
+        "model": "xgboost",
+        "roc_auc": 0.9794958926278194,
+        "roc_auc_sd": 0.0004389972034853249,
+        "brier_raw": 0.023241399518996876,
+        "brier_cal": 0.023241404715732893,
+        "brier_cal_se": 0.0001226887740715848,
+        "ece_raw": 0.0011395891382400905,
+        "ece_cal": 0.0011395891382400905,
+        "calibration": "none",
+        "seconds": 59.3
+      },
+      {
+        "model": "lightgbm",
+        "roc_auc": 0.9794871015859276,
+        "roc_auc_sd": 0.000392338325378763,
+        "brier_raw": 0.02332618759171658,
+        "brier_cal": 0.023326190886045466,
+        "brier_cal_se": 0.00011312695529197136,
+        "ece_raw": 0.0013798064714493224,
+        "ece_cal": 0.0013798064714493224,
+        "calibration": "none",
+        "seconds": 165.6
+      },
+      {
+        "model": "stack",
+        "roc_auc": 0.978277444132534,
+        "roc_auc_sd": 0.0005270476992817474,
+        "brier_raw": 0.024928577638099143,
+        "brier_cal": 0.02353659829400024,
+        "brier_cal_se": 0.00012577635349040998,
+        "ece_raw": 0.005650273457859631,
+        "ece_cal": 0.0007419230518120793,
+        "calibration": "isotonic",
+        "seconds": 1003.5
+      }
+    ]
+  },
+  "selected": "xgboost",
+  "best_by_brier": "xgboost",
+  "calibration": "none",
+  "thresholds": {
+    "low_moderate": 0.06521279923617844,
+    "moderate_high": 0.15551749616861343,
+    "rule": "low cut keeps 95% sensitivity but never above 0.30, high cut keeps 95% specificity and sits at least 0.05 above the low cut (out-of-fold, train split)"
+  },
+  "test": {
+    "metrics": {
+      "roc_auc": 0.9774823516828295,
+      "pr_auc": 0.8827184829328721,
+      "brier": 0.023345433175563812,
+      "log_loss": 0.08249227702617645,
+      "ece": 0.002443071783773239
+    },
+    "ci95": {
+      "roc_auc": [
+        0.9748288139285529,
+        0.9801945210177427
+      ],
+      "brier": [
+        0.021647015400230885,
+        0.02499765162356198
+      ]
+    },
+    "logreg_roc_auc": 0.9595802579674736,
+    "bands": {
+      "low": {
+        "n": 15388,
+        "share": 0.8003744928742328,
+        "observed_rate": 0.006303613205094879
+      },
+      "moderate": {
+        "n": 1432,
+        "share": 0.07448247165296994,
+        "observed_rate": 0.10824022346368715
+      },
+      "high": {
+        "n": 2406,
+        "share": 0.12514303547279726,
+        "observed_rate": 0.600166251039069
+      }
+    },
+    "at_low_cut": {
+      "cut": 0.06521279923617844,
+      "sensitivity": 0.9428066037735849,
+      "specificity": 0.8722760981175128,
+      "ppv": 0.4166232412714956,
+      "npv": 0.9936963867949051,
+      "tp": 1599,
+      "fp": 2239,
+      "tn": 15291,
+      "fn": 97
+    },
+    "at_high_cut": {
+      "cut": 0.15551749616861343,
+      "sensitivity": 0.8514150943396226,
+      "specificity": 0.945122646891044,
+      "ppv": 0.600166251039069,
+      "npv": 0.9850178359096314,
+      "tp": 1444,
+      "fp": 962,
+      "tn": 16568,
+      "fn": 252
+    }
+  },
+  "importance": [
+    {
+      "feature": "HbA1c_level",
+      "auc_drop": 0.147355954482343,
+      "sd": 0.0043139040408645656
+    },
+    {
+      "feature": "blood_glucose_level",
+      "auc_drop": 0.09409215939790554,
+      "sd": 0.001992592530016237
+    },
+    {
+      "feature": "age",
+      "auc_drop": 0.019926561205050153,
+      "sd": 0.001402332224414044
+    },
+    {
+      "feature": "bmi",
+      "auc_drop": 0.005860844011344513,
+      "sd": 0.0005949186194276332
+    },
+    {
+      "feature": "smoking_history",
+      "auc_drop": 0.0009847084916424277,
+      "sd": 0.00015271786902603591
+    },
+    {
+      "feature": "hypertension",
+      "auc_drop": 0.000690294064622432,
+      "sd": 0.0001867226663785541
+    },
+    {
+      "feature": "heart_disease",
+      "auc_drop": 0.000689290058013814,
+      "sd": 0.00013547786668958068
+    },
+    {
+      "feature": "gender",
+      "auc_drop": 0.0003030653650346604,
+      "sd": 0.00015724282372006374
+    }
+  ],
+  "ranges": {
+    "age": {
+      "p1": 1.0,
+      "p99": 80.0,
+      "min": 0.08,
+      "max": 80.0,
+      "median": 43.0,
+      "missing_rate": 0.0
+    },
+    "gender": {
+      "seen": [
+        "Female",
+        "Male"
+      ],
+      "missing_rate": 0.0
+    },
+    "hypertension": {
+      "seen": [
+        "0.0",
+        "1.0"
+      ],
+      "missing_rate": 0.0
+    },
+    "heart_disease": {
+      "seen": [
+        "0.0",
+        "1.0"
+      ],
+      "missing_rate": 0.0
+    },
+    "smoking_history": {
+      "seen": [
+        "No Info",
+        "current",
+        "ever",
+        "former",
+        "never",
+        "not current"
+      ],
+      "missing_rate": 0.0
+    },
+    "bmi": {
+      "p1": 14.54,
+      "p99": 48.99,
+      "min": 10.01,
+      "max": 95.69,
+      "median": 27.32,
+      "missing_rate": 0.0
+    },
+    "HbA1c_level": {
+      "p1": 3.5,
+      "p99": 8.8,
+      "min": 3.5,
+      "max": 9.0,
+      "median": 5.8,
+      "missing_rate": 0.0
+    },
+    "blood_glucose_level": {
+      "p1": 80.0,
+      "p99": 280.0,
+      "min": 80.0,
+      "max": 300.0,
+      "median": 140.0,
+      "missing_rate": 0.0
+    }
+  },
+  "extra": {
+    "without_lab_values": {
+      "model": "hist_gb",
+      "test_roc_auc": 0.8256829263042331,
+      "note": "same split, HbA1c and blood glucose removed"
+    }
+  },
+  "env": {
+    "python": "3.13.18",
+    "sklearn": "1.9.1",
+    "seed": 42
+  }
+}
