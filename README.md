@@ -143,6 +143,10 @@ data/raw/            the three datasets
 tests/  scripts/  docs/  assets/fonts/
 ```
 
+## More
+
+Notes on the results and on running it: [docs/notes.md](docs/notes.md).
+
 ## License
 
 MIT for the code. The DejaVu fonts in `assets/fonts/` keep their own license file.

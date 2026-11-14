@@ -9,7 +9,7 @@
     "prevalence": 0.6265664160401002,
     "sha256_16": "a5ea96369b8516d7",
     "notes": [
-      "kept all 399 rows; 1 malformed line(s) skipped; the old notebook kept only 158 by dropping rows with gaps"
+      "kept all 399 rows; 1 malformed line(s) skipped; rows with gaps are kept and imputed"
     ],
     "train_rows": 319,
     "test_rows": 80

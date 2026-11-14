@@ -85,8 +85,8 @@ def load_ckd(data_dir: Path):
             df[f.name] = df[f.name].map({"yes": 1.0, "no": 0.0})
     for c in ["al", "su"]:
         df[c] = df[c].map(lambda v: np.nan if pd.isna(v) else str(int(float(v))))
-    # the old notebook dropped every row with any gap, which threw away 242 of 400 patients
-    notes = [f"kept all {len(df)} rows; {bad} malformed line(s) skipped; the old notebook kept only 158 by dropping rows with gaps"]
+    # rows with gaps are kept and filled by the model's imputer, dropping them would lose 242 of 400 patients
+    notes = [f"kept all {len(df)} rows; {bad} malformed line(s) skipped; rows with gaps are kept and imputed"]
     return _finish(df, cond), y, notes, path
 
 

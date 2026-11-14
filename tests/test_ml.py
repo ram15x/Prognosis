@@ -21,7 +21,7 @@ def test_loaders_shapes_and_cleaning():
     Xh, yh, _, _ = data.load("heart", RAW)
     assert len(Xh) == 303 and set(yh.unique()) == {0, 1}
     Xc, yc, _, _ = data.load("ckd", RAW)
-    # the old notebook kept 158 rows, imputation keeps everything that parses
+    # dropping rows with gaps would leave 158, imputation keeps everything that parses
     assert len(Xc) >= 395 and yc.mean() > 0.5
     assert list(Xc.columns) == CONDITIONS["ckd"].names
 
